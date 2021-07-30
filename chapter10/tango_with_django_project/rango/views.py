@@ -54,7 +54,7 @@ def add_category(request):
 
         if form.is_valid():
             cat  =  form.save(commit=True)
-            return redirect('/rango/')
+            return redirect(reverse('rango:index'))
         else:
             print(form.errors)
     return render(request, 'rango/add_category.html', {'form': form})
@@ -66,7 +66,7 @@ def add_page(request, category_name_slug):
         category = None
 
     if category is None:
-        return redirect('/rango/')
+        return redirect(reverse('rango:index'))
 
     form = PageForm()
     if request.method == 'POST':
@@ -135,14 +135,14 @@ def user_login(request):
         else:
 
             print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login .")
+            return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'rango/login.html')
 
 
 @login_required
 def restricted(request):
-    return HttpResponse(request,'rango/restricted.html')
+    return  render(request,'rango/restricted.html')
 
 
 @login_required
